@@ -10,48 +10,46 @@ var GildedRose = function () {
   GildedRose.updateQuality(items);
 };
 GildedRose.updateQuality = function (items) {
+  // Iterar items
+  //   -Actualizar quality
+  //   -Actualizar sellIn
   for (var i = 0; i < items.length; i++) {
-    if ("Aged Brie" != items[i].name && "Backstage passes to a TAFKAL80ETC concert" != items[i].name) {
-      if (items[i].quality > 0) {
-        if ("Sulfuras, Hand of Ragnaros" != items[i].name) {
-          items[i].quality = items[i].quality - 1
-        }
-      }
-    } else {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if ("Backstage passes to a TAFKAL80ETC concert" == items[i].name) {
-          if (items[i].sellIn < 11) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
-            }
+    var item = items[i];
+    var ticket = "Backstage passes to a TAFKAL80ETC concert";
+    var legendary = "Sulfuras, Hand of Ragnaros";
+    var agedBrie = "Aged Brie";
+    var foo = 0;
+    var maxQuality = 50;
+    var minQuality = 0;
+    if (!item.is(agedBrie) && !item.is(ticket) && item.quality > minQuality && !item.is(legendary)) {
+      item.decreaseQuality();
+    } else if (item.quality < maxQuality) {
+      item.increaseQuality();
+      if (item.is(ticket)) {
+        if (item.sellIn < 11) {
+          if (!item.hasReachedMaxQuality()) {
+            item.increaseQuality();
           }
-          if (items[i].sellIn < 6) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
-            }
+        }
+        if (item.sellIn < 6) {
+          if (!item.hasReachedMaxQuality()) {
+            item.increaseQuality();
           }
         }
       }
     }
-    if ("Sulfuras, Hand of Ragnaros" != items[i].name) {
-      items[i].sellIn = items[i].sellIn - 1;
+    if (!item.is(legendary)) {
+      item.sellIn = item.sellIn - 1;
     }
-    if (items[i].sellIn < 0) {
-      if ("Aged Brie" != items[i].name) {
-        if ("Backstage passes to a TAFKAL80ETC concert" != items[i].name) {
-          if (items[i].quality > 0) {
-            if ("Sulfuras, Hand of Ragnaros" != items[i].name) {
-              items[i].quality = items[i].quality - 1
-            }
-          }
+    if (item.sellIn < foo) {
+      if (!item.is(agedBrie)) {
+        if (!item.is(ticket) && !item.hasReachedMinQuality() && !item.is(legendary)) {
+          item.decreaseQuality();
         } else {
-          items[i].quality = items[i].quality - items[i].quality
+          item.resetQuality();
         }
-      } else {
-        if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
-        }
+      } else if (!item.hasReachedMaxQuality()) {
+        item.increaseQuality();
       }
     }
   }

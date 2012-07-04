@@ -1,43 +1,5 @@
 describe("GildedRose shop manager", function () {
-  describe("Situación incial (tests de cobertura para refactor)", function () {
-
-    it("actualiza la calidad y el sellIn de los productos adecuadamente", function () {
-      var items = [];
-      items.push(new Item("+5 Dexterity Vest", 10, 20));
-      items.push(new Item("Aged Brie", 2, 0));
-      items.push(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-      items.push(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-      items.push(new Item("Conjured Mana Cake", 3, 6));
-      items = GildedRose.updateQuality(items);
-      [
-        {q:19, s:9},
-        {q:1, s:1},
-        {q:80, s:0},
-        {q:21, s:14},
-        {q:4, s:2}
-      ].forEach(function (testCase, idx) {
-            expect(items[idx].quality).toBe(testCase.q);
-            expect(items[idx].sellIn).toBe(testCase.s);
-          });
-    });
-    it("actualiza la calidad y el sellIn de los productos adecuadamente cuando hemos superado el sellIn", function () {
-      var items = [];
-      items.push(new Item("+5 Dexterity Vest", 0, 20));
-      items.push(new Item("Aged Brie", 0, 0));
-      items.push(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-      items.push(new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20));
-      items.push(new Item("Conjured Mana Cake", 0, 6));
-      items = GildedRose.updateQuality(items);
-      [
-        {q:18, s:-1},
-        {q:2, s:-1},
-        {q:80, s:0},
-        {q:0, s:-1},
-        {q:2, s:-1}
-      ].forEach(function (testCase, idx) {
-            expect(items[idx].quality).toBe(testCase.q);
-            expect(items[idx].sellIn).toBe(testCase.s);
-          });
-    });
+  it("does some stuff", function() {
+     expect(1).toBe(1);
   });
 });

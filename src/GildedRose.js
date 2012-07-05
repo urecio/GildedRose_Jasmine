@@ -15,6 +15,12 @@ function increaseQuality(item) {
 function decreaseQuality(item) {
   item.quality = item.quality - 1
 }
+function hasReachedMaxQuality(item, maxQuality) {
+  return item.quality >= maxQuality;
+}
+function hasReachedMinQuality(item, minQuality) {
+  return item.quality <= minQuality;
+}
 GildedRose.updateQuality = function (items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
@@ -28,7 +34,7 @@ GildedRose.updateQuality = function (items) {
     var firstTierSellIn = 11;
     var secondTierSellIn = 6;
     if (cheese != item.name && concertPass != item.name) {
-      if (item.quality > minQuality) {
+      if (!hasReachedMinQuality(item, minQuality)) {
         if (legendary != item.name) {
           decreaseQuality(item);
         }
@@ -37,16 +43,16 @@ GildedRose.updateQuality = function (items) {
         }
       }
     } else {
-      if (item.quality < maxQuality) {
+      if (!hasReachedMaxQuality(item, maxQuality)) {
         item.quality = item.quality + 1;
         if (concertPass == item.name) {
           if (item.sellIn < firstTierSellIn) {
-            if (item.quality < maxQuality) {
+            if (!hasReachedMaxQuality(item, maxQuality)) {
               increaseQuality(item);
             }
           }
           if (item.sellIn < secondTierSellIn) {
-            if (item.quality < maxQuality) {
+            if (!hasReachedMaxQuality(item, maxQuality)) {
               increaseQuality(item);
             }
           }
@@ -59,7 +65,7 @@ GildedRose.updateQuality = function (items) {
     if (item.sellIn < minSellIn) {
       if (cheese != item.name) {
         if (concertPass != item.name) {
-          if (item.quality > minQuality) {
+          if (!hasReachedMinQuality(item, minQuality)) {
             if (legendary != item.name) {
               decreaseQuality(item);
             }
@@ -71,7 +77,7 @@ GildedRose.updateQuality = function (items) {
           item.quality = item.quality - item.quality
         }
       } else {
-        if (item.quality < maxQuality) {
+        if (!hasReachedMaxQuality(item, maxQuality)) {
           increaseQuality(item);
         }
       }

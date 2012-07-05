@@ -16,6 +16,9 @@ GildedRose.updateQuality = function (items) {
         if ("Sulfuras, Hand of Ragnaros" != items[i].name) {
           items[i].quality = items[i].quality - 1
         }
+        if ("Conjured Mana Cake" == items[i].name) {
+          items[i].quality = items[i].quality - 1
+        }
       }
     } else {
       if (items[i].quality < 50) {
@@ -42,6 +45,9 @@ GildedRose.updateQuality = function (items) {
         if ("Backstage passes to a TAFKAL80ETC concert" != items[i].name) {
           if (items[i].quality > 0) {
             if ("Sulfuras, Hand of Ragnaros" != items[i].name) {
+              items[i].quality = items[i].quality - 1
+            }
+            if ("Conjured Mana Cake" == items[i].name) {
               items[i].quality = items[i].quality - 1
             }
           }

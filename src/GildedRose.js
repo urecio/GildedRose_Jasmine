@@ -9,18 +9,7 @@ var GildedRose = function () {
   items.push(new Item("Conjured Mana Cake", 3, 6));
   GildedRose.updateQuality(items);
 };
-function increaseQuality(item) {
-  item.quality = item.quality + 1
-}
-function decreaseQuality(item) {
-  item.quality = item.quality - 1
-}
-function hasReachedMaxQuality(item, maxQuality) {
-  return item.quality >= maxQuality;
-}
-function hasReachedMinQuality(item, minQuality) {
-  return item.quality <= minQuality;
-}
+
 GildedRose.updateQuality = function (items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
@@ -28,32 +17,30 @@ GildedRose.updateQuality = function (items) {
     var concertPass = "Backstage passes to a TAFKAL80ETC concert";
     var legendary = "Sulfuras, Hand of Ragnaros";
     var conjured = "Conjured Mana Cake";
-    var minQuality = 0;
-    var maxQuality = 50;
     var minSellIn = 0;
     var firstTierSellIn = 11;
     var secondTierSellIn = 6;
     if (cheese != item.name && concertPass != item.name) {
-      if (!hasReachedMinQuality(item, minQuality)) {
+      if (!item.hasReachedMinQuality()) {
         if (legendary != item.name) {
-          decreaseQuality(item);
+          item.decreaseQuality();
         }
         if (conjured == item.name) {
-          decreaseQuality(item);
+          item.decreaseQuality();
         }
       }
     } else {
-      if (!hasReachedMaxQuality(item, maxQuality)) {
+      if (!item.hasReachedMaxQuality()) {
         item.quality = item.quality + 1;
         if (concertPass == item.name) {
           if (item.sellIn < firstTierSellIn) {
-            if (!hasReachedMaxQuality(item, maxQuality)) {
-              increaseQuality(item);
+            if (!item.hasReachedMaxQuality()) {
+              item.increaseQuality();
             }
           }
           if (item.sellIn < secondTierSellIn) {
-            if (!hasReachedMaxQuality(item, maxQuality)) {
-              increaseQuality(item);
+            if (!item.hasReachedMaxQuality()) {
+              item.increaseQuality();
             }
           }
         }
@@ -65,20 +52,20 @@ GildedRose.updateQuality = function (items) {
     if (item.sellIn < minSellIn) {
       if (cheese != item.name) {
         if (concertPass != item.name) {
-          if (!hasReachedMinQuality(item, minQuality)) {
+          if (!item.hasReachedMinQuality()) {
             if (legendary != item.name) {
-              decreaseQuality(item);
+              item.decreaseQuality();
             }
             if (conjured == item.name) {
-              decreaseQuality(item);
+              item.decreaseQuality();
             }
           }
         } else {
           item.quality = item.quality - item.quality
         }
       } else {
-        if (!hasReachedMaxQuality(item, maxQuality)) {
-          increaseQuality(item);
+        if (!item.hasReachedMaxQuality()) {
+          item.increaseQuality();
         }
       }
     }

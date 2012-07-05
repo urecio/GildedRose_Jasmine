@@ -9,6 +9,12 @@ var GildedRose = function () {
   items.push(new Item("Conjured Mana Cake", 3, 6));
   GildedRose.updateQuality(items);
 };
+function increaseQuality(item) {
+  item.quality = item.quality + 1
+}
+function decreaseQuality(item) {
+  item.quality = item.quality - 1
+}
 GildedRose.updateQuality = function (items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
@@ -24,10 +30,10 @@ GildedRose.updateQuality = function (items) {
     if (cheese != item.name && concertPass != item.name) {
       if (item.quality > minQuality) {
         if (legendary != item.name) {
-          item.quality = item.quality - 1
+          decreaseQuality(item);
         }
         if (conjured == item.name) {
-          item.quality = item.quality - 1
+          decreaseQuality(item);
         }
       }
     } else {
@@ -36,12 +42,12 @@ GildedRose.updateQuality = function (items) {
         if (concertPass == item.name) {
           if (item.sellIn < firstTierSellIn) {
             if (item.quality < maxQuality) {
-              item.quality = item.quality + 1
+              increaseQuality(item);
             }
           }
           if (item.sellIn < secondTierSellIn) {
             if (item.quality < maxQuality) {
-              item.quality = item.quality + 1
+              increaseQuality(item);
             }
           }
         }
@@ -55,10 +61,10 @@ GildedRose.updateQuality = function (items) {
         if (concertPass != item.name) {
           if (item.quality > minQuality) {
             if (legendary != item.name) {
-              item.quality = item.quality - 1
+              decreaseQuality(item);
             }
             if (conjured == item.name) {
-              item.quality = item.quality - 1
+              decreaseQuality(item);
             }
           }
         } else {
@@ -66,7 +72,7 @@ GildedRose.updateQuality = function (items) {
         }
       } else {
         if (item.quality < maxQuality) {
-          item.quality = item.quality + 1
+          increaseQuality(item);
         }
       }
     }

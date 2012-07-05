@@ -1,19 +1,27 @@
 var Item = function (name, sellIn, quality) {
-  var maxQuality = 50, minQuality = 0;
-  this.quality = quality;
-  this.sellIn = sellIn;
   this.name = name;
-
-  this.increaseQuality = function () {
-    this.quality++;
-  };
-  this.decreaseQuality = function () {
-    this.quality--;
-  };
-  this.hasReachedMaxQuality = function () {
-    return this.quality >= maxQuality;
-  };
-  this.hasReachedMinQuality = function () {
-    return this.quality <= minQuality;
-  };
+  this.sellIn = sellIn;
+  this.quality = quality;
 };
+
+var ItemWrapper = (function () {
+  var maxQuality = 50, minQuality = 0;
+  var hasReachedMaxQuality = function (item) {
+    return item.quality >= maxQuality;
+  };
+  var hasReachedMinQuality = function (item) {
+    return item.quality <= minQuality;
+  };
+  return function (item) {
+    this.item = item;
+    this.name = item.name;
+    this.increaseQuality = function () {
+      if (!hasReachedMaxQuality(item))
+        item.quality++;
+    };
+    this.decreaseQuality = function () {
+      if (!hasReachedMinQuality(item))
+        item.quality--;
+    };
+  };
+}());

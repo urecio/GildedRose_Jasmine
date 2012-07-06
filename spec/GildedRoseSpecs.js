@@ -6,22 +6,24 @@ describe("GildedRose shop manager", function () {
       items.push(new CheesyItem("Aged Brie", 2, 0));
       items.push(new LegendaryItem("Sulfuras, Hand of Ragnaros", 0, 80));
       items.push(new TicketItem("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-      //items.push(new Item("Conjured Mana Cake", 3, 6));
-      GildedRose.updateQuality(items);
+      items.push(new ConjuredItem("Conjured Mana Cake", 3, 6));
+      items = new GildedRose(items).updateQuality();
       expect(items[0].quality).toBe(19);
       expect(items[1].quality).toBe(1);
       expect(items[2].quality).toBe(80);
       expect(items[3].quality).toBe(21);
+      expect(items[4].quality).toBe(4);
       expect(items[0].sellIn).toBe(9);
       expect(items[1].sellIn).toBe(1);
       expect(items[2].sellIn).toBe(0);
       expect(items[3].sellIn).toBe(14);
+      expect(items[4].sellIn).toBe(2);
     });
 
     it("concert passes range 1", function () {
       var items = [];
       items.push(new TicketItem("Backstage passes to a TAFKAL80ETC concert", 9, 20));
-      GildedRose.updateQuality(items);
+      new GildedRose(items).updateQuality();
       expect(items[0].quality).toBe(22);
       expect(items[0].sellIn).toBe(8);
     });
@@ -29,7 +31,7 @@ describe("GildedRose shop manager", function () {
     it("concert passes range 2", function () {
       var items = [];
       items.push(new TicketItem("Backstage passes to a TAFKAL80ETC concert", 3, 20));
-      GildedRose.updateQuality(items);
+      items = new GildedRose(items).updateQuality();
       expect(items[0].quality).toBe(23);
       expect(items[0].sellIn).toBe(2);
     });
@@ -40,16 +42,18 @@ describe("GildedRose shop manager", function () {
       items.push(new CheesyItem("Aged Brie", 0, 0));
       items.push(new LegendaryItem("Sulfuras, Hand of Ragnaros", 0, 80));
       items.push(new TicketItem("Backstage passes to a TAFKAL80ETC concert", 0, 20));
-      //items.push(new Item("Conjured Mana Cake", 0, 6));
-      GildedRose.updateQuality(items);
+      items.push(new ConjuredItem("Conjured Mana Cake", 0, 6));
+      items = new GildedRose(items).updateQuality();
       expect(items[0].quality).toBe(18);
       expect(items[1].quality).toBe(2);
       expect(items[2].quality).toBe(80);
       expect(items[3].quality).toBe(0);
+      expect(items[4].quality).toBe(2);
       expect(items[0].sellIn).toBe(-1);
       expect(items[1].sellIn).toBe(-1);
       expect(items[2].sellIn).toBe(0);
       expect(items[3].sellIn).toBe(-1);
+      expect(items[4].sellIn).toBe(-1);
     });
 
   });

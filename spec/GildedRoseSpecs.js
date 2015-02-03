@@ -1,5 +1,5 @@
 describe("GildedRose shop manager", function () {
-  
+
   it("should degrade twice as fast once the sell date has passed", function(){
     var items = [new Item('pepsi', 0, 50)];
     items = GildedRose.updateQuality(items);
@@ -24,6 +24,18 @@ describe("GildedRose shop manager", function () {
       expect(items[0].quality).toBe(1);
       expect(items[0].sellIn).toBe(0);
     });
+    it("should never be more than 50", function() {
+      var items = [new Item('Aged Brie', 1, 50)];
+      items = GildedRose.updateQuality(items);
+      expect(items[0].quality).toBe(50);
+      expect(items[0].sellIn).toBe(0);
+    });
+    it("shouldn't change (also sellin) if it is a sulfuras", function() {
+      var items = [new Item("Sulfuras, Hand of Ragnaros", 20, 80)];
+      items = GildedRose.updateQuality(items);
+      expect(items[0].quality).toBe(80);
+      expect(items[0].sellIn).toBe(20);
+    });
     describe("Backstage passes", function() {
       it("should increase if it is Backstage passes", function() {
         var items = [new Item('Backstage passes to a TAFKAL80ETC concert', 30, 0)];
@@ -44,12 +56,7 @@ describe("GildedRose shop manager", function () {
         expect(items[0].sellIn).toBe(3);
       });
     });
-    it("should never be more than 50", function() {
-      var items = [new Item('Aged Brie', 1, 50)];
-      items = GildedRose.updateQuality(items);
-      expect(items[0].quality).toBe(50);
-      expect(items[0].sellIn).toBe(0);
-    });
+
   });
 
 });
